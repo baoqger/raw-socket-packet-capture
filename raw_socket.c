@@ -38,10 +38,10 @@ int main(int argc, char **argv) {
         close(sock);
         exit(1);
     }
-    // An ioctl() request has encoded in it whether the argument is an in parameter or out parameter, 
-    // and the size of the argument argp in bytes.
     /* set the network card in promiscuos mode*/
-    
+    // An ioctl() request has encoded in it whether the argument is an in parameter or out parameter
+    // SIOCGIFFLAGS	0x8913		/* get flags			*/
+    // SIOCSIFFLAGS	0x8914		/* set flags			*/
     struct ifreq ethreq;
     strncpy(ethreq.ifr_name, "eth0", IF_NAMESIZE);
     if (ioctl(sock, SIOCGIFFLAGS, &ethreq) == -1) {
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
         exit(1);
     }
     ethreq.ifr_flags |= IFF_PROMISC;
-    if (ioctl(sock, SIOCGIFFLAGS, &ethreq) == -1) {
+    if (ioctl(sock, SIOCSIFFLAGS, &ethreq) == -1) {
         perror("ioctl");
         close(sock);
         exit(1);
