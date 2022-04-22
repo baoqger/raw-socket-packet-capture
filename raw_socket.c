@@ -78,11 +78,11 @@ int main(int argc, char **argv) {
     Filter.filter = BPF_code;
 
 
-    // if (setsockopt(sock, SOL_SOCKET, SO_ATTACH_FILTER, &Filter, sizeof(Filter)) < 0) {
-    //     perror("setsockopt attach filter");
-    //     close(sock);
-    //     exit(1);
-    // } 
+    if (setsockopt(sock, SOL_SOCKET, SO_ATTACH_FILTER, &Filter, sizeof(Filter)) < 0) {
+        perror("setsockopt attach filter");
+        close(sock);
+        exit(1);
+    } 
 
     while(1) {
         printf("-----------\n");
